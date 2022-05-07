@@ -1,19 +1,41 @@
 package tech.antoniosgarbi.desafiobanco.model;
 
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+
+@Entity
+@Getter
+@Setter
 @NoArgsConstructor
 public abstract class Conta implements IConta {
 	
 	private static final int AGENCIA_PADRAO = 1;
 	private static int SEQUENCIAL = 1;
 
+	@Id
+	@Column(name = "id", nullable = false)
+	private Long id;
+
 	protected int agencia;
 	protected int numero;
 	protected double saldo;
+	@ManyToOne
 	protected Cliente cliente;
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
 
 	public Conta(Cliente cliente) {
 		this.agencia = Conta.AGENCIA_PADRAO;
