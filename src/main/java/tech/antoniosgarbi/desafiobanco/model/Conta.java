@@ -1,4 +1,4 @@
-package model;
+package tech.antoniosgarbi.desafiobanco.model;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

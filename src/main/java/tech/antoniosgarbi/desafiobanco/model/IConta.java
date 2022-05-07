@@ -1,4 +1,4 @@
-package model;
+package tech.antoniosgarbi.desafiobanco.model;
 
 public interface IConta {
 	
