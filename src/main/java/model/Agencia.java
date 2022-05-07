@@ -7,7 +7,7 @@ import java.util.List;
 
 @Data
 @NoArgsConstructor
-public class Banco {
-	private String nome;
-	private List<Agencia> agencias;
+public class Agencia {
+    private int agenciaNumero;
+    private List<Cliente> clientes;
 }
