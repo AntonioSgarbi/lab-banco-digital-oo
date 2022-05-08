@@ -11,15 +11,13 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Cliente extends Pessoa {
+public class PessoaCliente extends Pessoa {
     @Id
     @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @OneToMany
     private List<ContaCorrente> contasCorrente;
-    @OneToOne
-    private ContaPoupanca contasPoupanca;
-
-
+    @OneToMany
+    private List<ContaPoupanca> contasPoupanca;
 }

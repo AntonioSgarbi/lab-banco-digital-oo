@@ -5,7 +5,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 @Getter
@@ -16,15 +15,5 @@ public class ContaCorrente extends Conta {
 	@Column(name = "id", nullable = false)
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	@OneToMany
-	private List<Cartao> cartoes;
-	private Double saldo;
 	private Double limiteAprovado;
-
-	@Override
-	public void imprimirExtrato() {
-		System.out.println("=== Extrato model.Conta Corrente ===");
-		super.imprimirInfosComuns();
-	}
-	
 }

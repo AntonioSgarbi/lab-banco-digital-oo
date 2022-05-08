@@ -4,20 +4,17 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.*;
+import javax.persistence.MappedSuperclass;
 import java.time.LocalDate;
 
-@Entity
+@MappedSuperclass
 @Getter
 @Setter
 @NoArgsConstructor
-public class Cartao {
-    @Id
-    @Column(name = "id", nullable = false)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    private String senha;
-    private LocalDate validade;
-    private String numero;
+public abstract class Cartao {
+    protected String senha;
+    protected LocalDate validade;
+    protected String numero;
+    protected Long contaId;
 
 }

@@ -3,23 +3,24 @@ package tech.antoniosgarbi.desafiobanco.model;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import tech.antoniosgarbi.desafiobanco.model.enums.CartaoCreditoStatus;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
-public class Agencia {
+public class CartaoCredito extends Cartao {
     @Id
     @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Integer numero;
-    @OneToMany
-    private List<ContaCorrente> contasCorrente;
-    @OneToMany
-    private List<ContaPoupanca> contasPoupanca;
-}
+    private Double limiteAprovado;
+    private CartaoCreditoStatus status;
+    @ManyToOne
+    private ContaCorrente contaCorrente;
+    @ManyToOne
+    private ContaPoupanca contaPoupanca;
 
+}

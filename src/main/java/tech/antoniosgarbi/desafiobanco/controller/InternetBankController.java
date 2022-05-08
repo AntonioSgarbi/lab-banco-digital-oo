@@ -2,11 +2,7 @@ package tech.antoniosgarbi.desafiobanco.controller;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import tech.antoniosgarbi.desafiobanco.dto.internetbank.EmprestimoRequest;
-import tech.antoniosgarbi.desafiobanco.dto.internetbank.TransferenciaRequest;
-import tech.antoniosgarbi.desafiobanco.dto.internetbank.ExtratoResponse;
-import tech.antoniosgarbi.desafiobanco.dto.internetbank.LoginRequest;
-import tech.antoniosgarbi.desafiobanco.dto.internetbank.LoginResponse;
+import tech.antoniosgarbi.desafiobanco.dto.internetbank.*;
 import tech.antoniosgarbi.desafiobanco.service.IInternetBankService;
 
 @RestController
