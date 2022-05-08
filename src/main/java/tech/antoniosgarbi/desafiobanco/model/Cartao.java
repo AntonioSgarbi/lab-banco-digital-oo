@@ -5,21 +5,19 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.List;
+import java.time.LocalDate;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
-public class Cliente extends Pessoa {
+public class Cartao {
     @Id
     @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @OneToMany
-    private List<ContaCorrente> contasCorrente;
-    @OneToOne
-    private ContaPoupanca contasPoupanca;
-
+    private String senha;
+    private LocalDate validade;
+    private String numero;
 
 }

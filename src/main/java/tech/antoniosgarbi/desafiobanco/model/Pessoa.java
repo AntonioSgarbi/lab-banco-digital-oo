@@ -13,6 +13,4 @@ import javax.persistence.*;
 @NoArgsConstructor
 public abstract class Pessoa {
     private String nome;
-    @ManyToOne
-    private Agencia agencia;
 }

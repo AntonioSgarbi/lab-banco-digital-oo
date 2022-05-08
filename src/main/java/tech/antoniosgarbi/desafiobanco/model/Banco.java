@@ -19,7 +19,6 @@ public class Banco {
 	@Id
 	@Column(name = "id", nullable = false)
 	private Long id;
-
 	private String nome;
 	@OneToMany
 	private List<Agencia> agencias;

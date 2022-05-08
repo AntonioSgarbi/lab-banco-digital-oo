@@ -13,6 +13,7 @@ import javax.persistence.*;
 public class Funcionario extends Pessoa {
     @Id
     @Column(name = "id", nullable = false)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     private Long id;
+
 }
