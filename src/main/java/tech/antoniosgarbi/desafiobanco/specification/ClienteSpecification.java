@@ -21,35 +21,49 @@ public class ClienteSpecification implements Specification<PessoaCliente> {
     }
 
     @Override
-    public Predicate toPredicate(Root<PessoaCliente> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
+    public Predicate toPredicate(Root<PessoaCliente> root, CriteriaQuery<?> query, CriteriaBuilder builder) {
         if (specBodyCliente.getNome() != null) {
             predicates.add(
-                    criteriaBuilder.like(
-                            criteriaBuilder.upper(root.get("nome")),
+                    builder.like(
+                            builder.upper(root.get("nome")),
                             String.format("%%%s%%", specBodyCliente.getNome().toUpperCase())
                     ));
         }
         if (specBodyCliente.getDataNascimentoExata() != null) {
-            predicates.add(criteriaBuilder.equal(root.get("dataNascimento"), specBodyCliente.getDataNascimentoExata()));
+            predicates.add(builder.equal(root.get("dataNascimento"), specBodyCliente.getDataNascimentoExata()));
         } else {
             if (specBodyCliente.getDataNascimentoMinima() != null) {
                 predicates.add(
-                        criteriaBuilder.greaterThanOrEqualTo(
+                        builder.greaterThanOrEqualTo(
                                 root.get("dataNascimento"),
                                 specBodyCliente.getDataNascimentoMinima())
                 );
             }
             if (specBodyCliente.getDataNascimentoMaxima() != null) {
                 predicates.add(
-                        criteriaBuilder.lessThanOrEqualTo(
+                        builder.lessThanOrEqualTo(
                                 root.get("dataNascimento"),
                                 specBodyCliente.getDataNascimentoMinima())
                 );
             }
         }
-        //todo
-        // filtro contas???
-
-        return criteriaBuilder.and(predicates.toArray(new Predicate[predicates.size()]));
+        if(specBodyCliente.getPessoaRegistroTipo() != null) {
+            predicates.add(
+              builder.equal(root.get("registroTipo"), specBodyCliente.getPessoaRegistroTipo())
+            );
+        }
+        if(specBodyCliente.getIdsContaCorrente() != null) {
+            predicates.add(
+                    builder.or(
+                            root.get("contasCorrente").get("id").in(specBodyCliente.getIdsContaCorrente()))
+            );
+        }
+        if(specBodyCliente.getIdsContaPoupanca() != null) {
+            predicates.add(
+                    builder.or(
+                            root.get("contasPoupanca").get("id").in(specBodyCliente.getIdsContaPoupanca()))
+            );
+        }
+        return builder.and(predicates.toArray(new Predicate[predicates.size()]));
     }
 }

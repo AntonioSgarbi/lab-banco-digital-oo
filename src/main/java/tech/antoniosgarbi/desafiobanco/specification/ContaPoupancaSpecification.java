@@ -21,27 +21,27 @@ public class ContaPoupancaSpecification implements Specification<ContaPoupanca> 
     }
 
     @Override
-    public Predicate toPredicate(Root<ContaPoupanca> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
+    public Predicate toPredicate(Root<ContaPoupanca> root, CriteriaQuery<?> query, CriteriaBuilder builder) {
         if (contaSpecBody.getNumero() != null) {
-            predicates.add(cb.equal(root.get("numero"), contaSpecBody.getNumero()));
+            predicates.add(builder.equal(root.get("numero"), contaSpecBody.getNumero()));
         } else {
             if (contaSpecBody.getSaldoExato() != null) {
-                predicates.add(cb.equal(root.get("saldo"), contaSpecBody.getSaldoExato()));
+                predicates.add(builder.equal(root.get("saldo"), contaSpecBody.getSaldoExato()));
             } else {
                 if (contaSpecBody.getSaldoMinimo() != null) {
-                    predicates.add(cb.greaterThanOrEqualTo(root.get("saldo"), contaSpecBody.getSaldoMinimo()));
+                    predicates.add(builder.greaterThanOrEqualTo(root.get("saldo"), contaSpecBody.getSaldoMinimo()));
                 }
                 if (contaSpecBody.getSaldoMaximo() != null) {
-                    predicates.add(cb.lessThanOrEqualTo(root.get("saldo"), contaSpecBody.getSaldoMaximo()));
+                    predicates.add(builder.lessThanOrEqualTo(root.get("saldo"), contaSpecBody.getSaldoMaximo()));
                 }
             }
             if(contaSpecBody.getAgencia() != null) {
-                predicates.add(cb.equal(root.get("agencia"), contaSpecBody.getAgencia()));
+                predicates.add(builder.equal(root.get("agencia"), contaSpecBody.getAgencia()));
             }
             if(contaSpecBody.getCliente() != null) {
-                predicates.add(cb.equal(root.get("cliente"), contaSpecBody.getCliente()));
+                predicates.add(builder.equal(root.get("cliente"), contaSpecBody.getCliente()));
             }
         }
-        return cb.and(predicates.toArray(new Predicate[predicates.size()]));
+        return builder.and(predicates.toArray(new Predicate[predicates.size()]));
     }
 }

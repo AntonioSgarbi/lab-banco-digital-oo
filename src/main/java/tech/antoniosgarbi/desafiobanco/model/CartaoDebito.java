@@ -17,9 +17,5 @@ public class CartaoDebito extends Cartao {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private CartaoDebitoStatus status;
-    @ManyToOne
-    private ContaPoupanca contaPoupanca;
-    @ManyToOne
-    private ContaCorrente contaCorrente;
 
 }

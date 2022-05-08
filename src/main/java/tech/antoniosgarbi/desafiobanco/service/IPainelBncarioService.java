@@ -9,7 +9,11 @@ public interface IPainelBncarioService {
 
     Page<ClienteResponse> pesquisarClientes(SpecBodyCliente clienteSpecBody, Pageable pageable);
 
-    Page<CartaoResponse> pesquisarCartoes(CartaoSpecBody cartaoSpecBody, Pageable pageable);
+    Page<CartaoResponse> pesquisarCartoesCredito(SpecBodyCartaoCredito cartaoSpecBody, Pageable pageable);
+
+    Page<CartaoResponse> pesquisarCartoesDebito(SpecBodyCartaoDebito cartaoSpecBody, Pageable pageable);
 
     Page<ContaResponse> pesquisarContasPoupanca(SpecBodyContaPoupanca contaSpecBody, Pageable pageable);
+
+    ClienteResponse cadastrarCliente(ClienteCadastroRequest clienteRequest);
 }

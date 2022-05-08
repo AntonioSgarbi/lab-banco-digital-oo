@@ -18,9 +18,7 @@ public class CartaoCredito extends Cartao {
     private Long id;
     private Double limiteAprovado;
     private CartaoCreditoStatus status;
-    @ManyToOne
-    private ContaCorrente contaCorrente;
-    @ManyToOne
-    private ContaPoupanca contaPoupanca;
+
+
 
 }
