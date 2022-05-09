@@ -14,19 +14,13 @@ public class InternetBankController {
         this.internetBankService = internetBankService;
     }
 
-    @PostMapping("/login")
-    public ResponseEntity<LoginResponse> loginApp(@RequestBody LoginRequest loginRequest) {
-        return ResponseEntity.ok(internetBankService.login(loginRequest));
-    }
-
     @GetMapping("/extrato")
-    public ResponseEntity<ExtratoResponse> mostrarExtrato(@RequestParam("authorization") String mockToken) {
-        return ResponseEntity.ok(internetBankService.mostrarExtrato(mockToken));
+    public ResponseEntity<ExtratoResponse> mostrarExtrato() {
+        return ResponseEntity.ok(internetBankService.mostrarExtrato());
     }
 
     @PostMapping("/transferencia")
     public ResponseEntity<Boolean> transferirDinheiro(
-            @RequestParam("authorization") String mockToken,
             @RequestBody TransferenciaRequest saqueRequest) {
         return ResponseEntity.ok(internetBankService.transferirDinheiro(saqueRequest));
     }

@@ -3,9 +3,8 @@ package tech.antoniosgarbi.desafiobanco.service;
 import tech.antoniosgarbi.desafiobanco.dto.internetbank.*;
 
 public interface IInternetBankService {
-    LoginResponse login(LoginRequest loginRequest);
 
-    ExtratoResponse mostrarExtrato(String mockToken);
+    ExtratoResponse mostrarExtrato();
 
     Boolean transferirDinheiro(TransferenciaRequest saqueRequest);
 

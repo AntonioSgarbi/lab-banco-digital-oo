@@ -34,7 +34,7 @@ public class PainelBancarioService implements IPainelBncarioService {
 
     @Override
     public ClienteResponse cadastrarCliente(ClienteCadastroRequest clienteRequest) {
-        return null;
+        return clienteService.cadastrarClientePainelBancario(clienteRequest);
     }
 
     @Override

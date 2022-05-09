@@ -8,12 +8,7 @@ import tech.antoniosgarbi.desafiobanco.service.IInternetBankService;
 public class InternetBankService implements IInternetBankService {
 
     @Override
-    public LoginResponse login(LoginRequest loginRequest) {
-        return null;
-    }
-
-    @Override
-    public ExtratoResponse mostrarExtrato(String mockToken) {
+    public ExtratoResponse mostrarExtrato() {
         return null;
     }
 
