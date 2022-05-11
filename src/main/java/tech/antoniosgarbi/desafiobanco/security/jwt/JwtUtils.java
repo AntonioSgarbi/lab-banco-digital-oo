@@ -1,7 +1,6 @@
 package tech.antoniosgarbi.desafiobanco.security.jwt;
 
-import java.util.Date;
-
+import io.jsonwebtoken.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -9,9 +8,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.argon2.Argon2PasswordEncoder;
 import org.springframework.stereotype.Component;
-
-import io.jsonwebtoken.*;
 import tech.antoniosgarbi.desafiobanco.security.services.UserDetailsImpl;
+
+import java.util.Date;
 
 @Component
 public class JwtUtils {

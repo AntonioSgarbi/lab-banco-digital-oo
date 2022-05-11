@@ -5,7 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import tech.antoniosgarbi.desafiobanco.model.enums.CartaoDebitoStatus;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
 
 @Entity
 @Getter

@@ -6,7 +6,10 @@ import org.springframework.stereotype.Service;
 import tech.antoniosgarbi.desafiobanco.dto.caixaeletronico.*;
 import tech.antoniosgarbi.desafiobanco.dto.evento.Movimentacao;
 import tech.antoniosgarbi.desafiobanco.model.Conta;
-import tech.antoniosgarbi.desafiobanco.service.contract.*;
+import tech.antoniosgarbi.desafiobanco.service.contract.ICaixaEletronicoService;
+import tech.antoniosgarbi.desafiobanco.service.contract.ICartaoService;
+import tech.antoniosgarbi.desafiobanco.service.contract.IContaService;
+import tech.antoniosgarbi.desafiobanco.service.contract.IEventoBancarioService;
 
 @Service
 public class CaixaEletronicoService implements ICaixaEletronicoService {

@@ -5,19 +5,20 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import tech.antoniosgarbi.desafiobanco.dto.caixaeletronico.SaqueRequest;
 import tech.antoniosgarbi.desafiobanco.dto.caixaeletronico.SaqueResponse;
-import tech.antoniosgarbi.desafiobanco.dto.internetbank.ExtratoResponse;
 import tech.antoniosgarbi.desafiobanco.dto.internetbank.TransferenciaRequest;
 import tech.antoniosgarbi.desafiobanco.dto.internetbank.TransferenciaResponse;
 import tech.antoniosgarbi.desafiobanco.dto.painelbancario.ContaResponse;
 import tech.antoniosgarbi.desafiobanco.dto.painelbancario.SpecBodyConta;
 import tech.antoniosgarbi.desafiobanco.exception.ContaNaoEncontrada;
 import tech.antoniosgarbi.desafiobanco.exception.SaldoInsuficiente;
-import tech.antoniosgarbi.desafiobanco.model.*;
+import tech.antoniosgarbi.desafiobanco.model.Conta;
+import tech.antoniosgarbi.desafiobanco.model.ContaCorrente;
+import tech.antoniosgarbi.desafiobanco.model.ContaPoupanca;
+import tech.antoniosgarbi.desafiobanco.model.PessoaCliente;
 import tech.antoniosgarbi.desafiobanco.repository.ContaRepository;
 import tech.antoniosgarbi.desafiobanco.service.contract.IContaService;
 
 import javax.transaction.Transactional;
-import java.util.List;
 import java.util.Optional;
 
 @Service

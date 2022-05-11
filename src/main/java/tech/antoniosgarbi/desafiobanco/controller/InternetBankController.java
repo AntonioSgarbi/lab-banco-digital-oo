@@ -3,7 +3,10 @@ package tech.antoniosgarbi.desafiobanco.controller;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
-import tech.antoniosgarbi.desafiobanco.dto.internetbank.*;
+import tech.antoniosgarbi.desafiobanco.dto.internetbank.EmprestimoRequest;
+import tech.antoniosgarbi.desafiobanco.dto.internetbank.ExtratoRequest;
+import tech.antoniosgarbi.desafiobanco.dto.internetbank.InternetBankResponse;
+import tech.antoniosgarbi.desafiobanco.dto.internetbank.TransferenciaRequest;
 import tech.antoniosgarbi.desafiobanco.security.services.UserDetailsImpl;
 import tech.antoniosgarbi.desafiobanco.service.contract.IInternetBankService;
 

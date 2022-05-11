@@ -1,11 +1,13 @@
 package tech.antoniosgarbi.desafiobanco.specification;
 
 import org.springframework.data.jpa.domain.Specification;
-import tech.antoniosgarbi.desafiobanco.dto.painelbancario.SpecBodyCartaoCredito;
 import tech.antoniosgarbi.desafiobanco.dto.painelbancario.SpecBodyCartaoDebito;
 import tech.antoniosgarbi.desafiobanco.model.CartaoDebito;
 
-import javax.persistence.criteria.*;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 import java.util.LinkedList;
 import java.util.List;
 

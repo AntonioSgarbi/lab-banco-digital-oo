@@ -4,7 +4,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import tech.antoniosgarbi.desafiobanco.dto.painelbancario.*;
-import tech.antoniosgarbi.desafiobanco.service.contract.*;
+import tech.antoniosgarbi.desafiobanco.service.contract.ICartaoService;
+import tech.antoniosgarbi.desafiobanco.service.contract.IClienteService;
+import tech.antoniosgarbi.desafiobanco.service.contract.IContaService;
 
 @Service
 public class PainelBancarioService {

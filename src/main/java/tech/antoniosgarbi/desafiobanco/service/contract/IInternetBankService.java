@@ -1,6 +1,5 @@
 package tech.antoniosgarbi.desafiobanco.service.contract;
 
-import tech.antoniosgarbi.desafiobanco.dto.internetbank.ExtratoRequest;
 import tech.antoniosgarbi.desafiobanco.dto.internetbank.*;
 import tech.antoniosgarbi.desafiobanco.security.services.UserDetailsImpl;
 

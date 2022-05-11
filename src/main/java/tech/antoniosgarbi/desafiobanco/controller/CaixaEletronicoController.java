@@ -4,10 +4,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import tech.antoniosgarbi.desafiobanco.dto.caixaeletronico.*;
-import tech.antoniosgarbi.desafiobanco.security.services.UserDetailsImpl;
 import tech.antoniosgarbi.desafiobanco.service.contract.ICaixaEletronicoService;
 
 @RestController

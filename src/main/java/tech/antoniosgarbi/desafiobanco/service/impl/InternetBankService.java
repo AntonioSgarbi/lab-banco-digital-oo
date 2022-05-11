@@ -1,7 +1,6 @@
 package tech.antoniosgarbi.desafiobanco.service.impl;
 
 import org.springframework.stereotype.Service;
-import tech.antoniosgarbi.desafiobanco.dto.internetbank.ExtratoRequest;
 import tech.antoniosgarbi.desafiobanco.dto.internetbank.*;
 import tech.antoniosgarbi.desafiobanco.model.Conta;
 import tech.antoniosgarbi.desafiobanco.model.EventoBancario;

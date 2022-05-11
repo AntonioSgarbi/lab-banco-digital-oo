@@ -2,9 +2,7 @@ package tech.antoniosgarbi.desafiobanco.specification;
 
 import org.springframework.data.jpa.domain.Specification;
 import tech.antoniosgarbi.desafiobanco.dto.painelbancario.SpecBodyCartaoCredito;
-import tech.antoniosgarbi.desafiobanco.dto.painelbancario.SpecBodyCliente;
 import tech.antoniosgarbi.desafiobanco.model.CartaoCredito;
-import tech.antoniosgarbi.desafiobanco.model.PessoaCliente;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
