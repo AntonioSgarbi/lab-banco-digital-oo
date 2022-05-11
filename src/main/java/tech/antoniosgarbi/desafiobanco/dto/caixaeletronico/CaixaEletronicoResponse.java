@@ -1,13 +1,13 @@
 package tech.antoniosgarbi.desafiobanco.dto.caixaeletronico;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public class SaqueResponse extends CaixaEletronicoResponse {
+@AllArgsConstructor
+public class CaixaEletronicoResponse {
+    protected String mensagem;
 
-    public SaqueResponse(String mensagem) {
-        super(mensagem);
-    }
 }

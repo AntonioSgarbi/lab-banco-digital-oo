@@ -3,10 +3,12 @@ package tech.antoniosgarbi.desafiobanco.model;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import tech.antoniosgarbi.desafiobanco.model.enums.EventoTipo;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
+@Inheritance
 @Entity
 @Getter
 @Setter
@@ -18,9 +20,13 @@ public class EventoBancario {
     private Long id;
     private LocalDateTime momentoRegistrado;
 
+    private EventoTipo tipo;
+    @ManyToOne
+    private Conta conta;
+
     public EventoBancario(Long id) {
-        this.id = id;
         this.momentoRegistrado = LocalDateTime.now();
+        this.id = id;
     }
 
 }

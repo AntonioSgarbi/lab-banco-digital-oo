@@ -6,6 +6,7 @@ import lombok.Setter;
 import tech.antoniosgarbi.desafiobanco.model.enums.PessoaRegistroTipo;
 
 import javax.persistence.MappedSuperclass;
+import javax.persistence.OneToOne;
 import java.time.LocalDate;
 
 @MappedSuperclass
@@ -17,4 +18,6 @@ public abstract class Pessoa {
     private String documento;
     private PessoaRegistroTipo registroTipo;
     private LocalDate dataNascimento;
+    @OneToOne
+    private User user;
 }

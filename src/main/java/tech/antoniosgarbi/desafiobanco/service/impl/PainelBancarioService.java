@@ -4,54 +4,38 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import tech.antoniosgarbi.desafiobanco.dto.painelbancario.*;
-import tech.antoniosgarbi.desafiobanco.service.*;
+import tech.antoniosgarbi.desafiobanco.service.contract.*;
 
 @Service
-public class PainelBancarioService implements IPainelBncarioService {
-    private final IContaCorrenteService contaCorrenteService;
-    private final IContaPoupancaService contaPoupancaService;
+public class PainelBancarioService {
+    private final IContaService contaService;
     private final IClienteService clienteService;
-    private final ICartaoCreditoService cartaoCreditoService;
-    private final ICartaoDebitoService cartaoDebitoService;
+    private final ICartaoService cartaoService;
 
-    public PainelBancarioService(IContaCorrenteService contaCorrenteService, IContaPoupancaService contaPoupancaService, IClienteService clienteService, ICartaoCreditoService cartaoCreditoService, ICartaoDebitoService cartaoDebitoService) {
-        this.contaCorrenteService = contaCorrenteService;
-        this.contaPoupancaService = contaPoupancaService;
+    public PainelBancarioService(IContaService contaService,
+                                 IClienteService clienteService,
+                                 ICartaoService cartaoService
+    ) {
+        this.contaService = contaService;
         this.clienteService = clienteService;
-        this.cartaoCreditoService = cartaoCreditoService;
-        this.cartaoDebitoService = cartaoDebitoService;
+        this.cartaoService = cartaoService;
     }
 
-    @Override
-    public Page<ContaResponse> pesquisarContasCorrente(SpecBodyContaCorrente contasSpecBody, Pageable pageable) {
-        return contaCorrenteService.pequisarContasCorrente(contasSpecBody, pageable);
+    public Page<ContaResponse> pesquisarContas(SpecBodyConta contaSpecBody, Pageable pageable) {
+        return contaService.pesquisarContas(contaSpecBody, pageable);
     }
 
-    @Override
-    public Page<ContaResponse> pesquisarContasPoupanca(SpecBodyContaPoupanca contaSpecBody, Pageable pageable) {
-        return contaPoupancaService.pesquisarContasPoupanca(contaSpecBody, pageable);
-    }
-
-    @Override
-    public ClienteResponse cadastrarCliente(ClienteCadastroRequest clienteRequest) {
+    public ClienteCadastroResponse cadastrarCliente(ClienteCadastroRequest clienteRequest) {
         return clienteService.cadastrarClientePainelBancario(clienteRequest);
     }
 
-    @Override
-    public Page<ClienteResponse> pesquisarClientes(SpecBodyCliente clienteSpecBody, Pageable pageable) {
+    public Page<ClienteCadastroResponse> pesquisarClientes(SpecBodyCliente clienteSpecBody, Pageable pageable) {
         return clienteService.pesquisarClientes(clienteSpecBody, pageable);
     }
 
-    @Override
-    public Page<CartaoResponse> pesquisarCartoesCredito(SpecBodyCartaoCredito cartaoSpecBody, Pageable pageable) {
-        return cartaoCreditoService.pesquisarCartoes(cartaoSpecBody, pageable);
+    public Page<CartaoResponse> pesquisarCartoes(SpecBodyCartao cartaoSpecBody, Pageable pageable) {
+        return cartaoService.pesquisarCartoes(cartaoSpecBody, pageable);
     }
-
-    @Override
-    public Page<CartaoResponse> pesquisarCartoesDebito(SpecBodyCartaoDebito cartaoSpecBody, Pageable pageable) {
-        return cartaoDebitoService.pesquisarCartoes(cartaoSpecBody, pageable);
-    }
-
 
 
 }

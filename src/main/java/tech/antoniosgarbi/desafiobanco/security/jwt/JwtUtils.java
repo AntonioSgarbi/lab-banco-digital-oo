@@ -5,7 +5,9 @@ import java.util.Date;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.argon2.Argon2PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import io.jsonwebtoken.*;
@@ -21,6 +23,10 @@ public class JwtUtils {
   @Value("${personal.security.jwtExpirationMs}")
   private int jwtExpirationMs;
 
+  @Value("${personal.security.nova-senha}")
+  private String senha;
+
+
   public String generateJwtToken(Authentication authentication) {
 
     UserDetailsImpl userPrincipal = (UserDetailsImpl) authentication.getPrincipal();
@@ -33,11 +39,9 @@ public class JwtUtils {
         .compact();
   }
 
-
   public String generateJwtToken(UserDetailsImpl userPrincipal) {
     return generateTokenFromUsername(userPrincipal.getUsername());
   }
-
 
   public String getUserNameFromJwtToken(String token) {
     return Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody().getSubject();
@@ -66,5 +70,12 @@ public class JwtUtils {
     }
 
     return false;
+  }
+
+  @Bean()
+  public void geradorDeSenha() {
+    Argon2PasswordEncoder argon = new Argon2PasswordEncoder();
+    String senhaEncripitada = argon.encode(this.senha);
+    System.out.println("Nova Senha gerada: "+ senhaEncripitada);
   }
 }

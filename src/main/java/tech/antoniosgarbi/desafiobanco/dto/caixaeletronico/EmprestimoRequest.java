@@ -1,7 +1,17 @@
 package tech.antoniosgarbi.desafiobanco.dto.caixaeletronico;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
 public class EmprestimoRequest extends RequestCaixaEletronico {
-    public EmprestimoRequest(String cartaoNumero, String senha) {
+    private Double valor;
+    private Short quantidadeParcelas;
+
+    public EmprestimoRequest(String cartaoNumero, String senha, Double valor, Short quantidadeParcelas) {
         super(cartaoNumero, senha);
+        this.valor = valor;
+        this.quantidadeParcelas = quantidadeParcelas;
     }
 }

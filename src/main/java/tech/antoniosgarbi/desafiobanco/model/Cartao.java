@@ -4,23 +4,22 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.ManyToOne;
-import javax.persistence.MappedSuperclass;
+import javax.persistence.*;
 import java.time.LocalDate;
 
-@MappedSuperclass
+@Entity
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @Getter
 @Setter
 @NoArgsConstructor
 public abstract class Cartao {
+    @Id
+    @Column(name = "id", nullable = false)
+    private Long id;
+
     protected String senha;
     protected LocalDate validade;
     protected String numero;
-    protected Long contaId;
     @ManyToOne
-    protected ContaPoupanca contaPoupanca;
-    @ManyToOne
-    protected ContaCorrente contaCorrente;
-
-
+    protected Conta conta;
 }

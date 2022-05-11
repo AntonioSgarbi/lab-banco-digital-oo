@@ -4,40 +4,40 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.ManyToOne;
-import javax.persistence.MappedSuperclass;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.Set;
 
-@MappedSuperclass
+@Entity
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @Getter
 @Setter
 @NoArgsConstructor
 public abstract class Conta {
+    @Id
+    @Column(name = "id", nullable = false)
+    private Long id;
 
     protected Long numero;
     protected Double saldo;
-    protected Double limiteAprovado;
     @ManyToOne
     protected Agencia agencia;
     @ManyToOne
     protected PessoaCliente cliente;
     @OneToMany
-    protected Set<CartaoDebito> cartoesDebito;
-    @OneToMany
-    protected Set<CartaoCredito> cartoesCredito;
+    protected Set<Cartao> cartoes;
     @OneToMany
     protected Set<EventoBancario> eventosBancarios;
+    protected String chavePix;
 
     @Override
     public String toString() {
         return "Conta{ " +
                 "\nnumero: " + numero +
                 ",\nsaldo: " + saldo +
-                ",\nlimiteAprovado: " + limiteAprovado +
                 ",\nagencia: " + agencia.getNumero() +
                 ",\ncliente: " + cliente +
                 ",\neventosBancarios: " + eventosBancarios +
                 "\n}";
     }
+
 }

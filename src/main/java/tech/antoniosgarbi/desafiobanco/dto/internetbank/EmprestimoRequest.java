@@ -1,4 +1,9 @@
 package tech.antoniosgarbi.desafiobanco.dto.internetbank;
 
-public class EmprestimoRequest {
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+public class EmprestimoRequest extends InternetBankRequest {
 }

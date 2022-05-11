@@ -5,7 +5,5 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public class TransferenciaRequest extends InternetBankRequest {
-    private String chavePix;
-    private Double valor;
+public class ExtratoRequest extends InternetBankRequest{
 }

@@ -17,7 +17,7 @@ public class PessoaCliente extends Pessoa {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @OneToMany
-    private List<ContaCorrente> contasCorrente;
-    @OneToMany
-    private List<ContaPoupanca> contasPoupanca;
+    private List<Conta> contas;
+//    @OneToMany
+//    private List<ContaPoupanca> contasPoupanca;
 }

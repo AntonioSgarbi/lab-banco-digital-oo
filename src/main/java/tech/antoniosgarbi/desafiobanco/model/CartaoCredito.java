@@ -12,13 +12,7 @@ import javax.persistence.*;
 @Setter
 @NoArgsConstructor
 public class CartaoCredito extends Cartao {
-    @Id
-    @Column(name = "id", nullable = false)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
     private Double limiteAprovado;
     private CartaoCreditoStatus status;
-
-
 
 }

@@ -3,9 +3,8 @@ package tech.antoniosgarbi.desafiobanco.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
-import tech.antoniosgarbi.desafiobanco.model.ContaCorrente;
+import tech.antoniosgarbi.desafiobanco.model.Cartao;
 
 @Repository
-public interface ContaCorrenteRepository
-        extends JpaRepository<ContaCorrente, Long>, JpaSpecificationExecutor<ContaCorrente> {
+public interface CartaoRepository extends JpaRepository<Cartao, Long>, JpaSpecificationExecutor<Cartao> {
 }

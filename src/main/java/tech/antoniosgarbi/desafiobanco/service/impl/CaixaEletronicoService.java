@@ -1,30 +1,47 @@
 package tech.antoniosgarbi.desafiobanco.service.impl;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import tech.antoniosgarbi.desafiobanco.dto.caixaeletronico.*;
-import tech.antoniosgarbi.desafiobanco.service.ICaixaEletronicoService;
-import tech.antoniosgarbi.desafiobanco.service.IClienteService;
+import tech.antoniosgarbi.desafiobanco.dto.evento.Movimentacao;
+import tech.antoniosgarbi.desafiobanco.model.Conta;
+import tech.antoniosgarbi.desafiobanco.service.contract.*;
 
 @Service
 public class CaixaEletronicoService implements ICaixaEletronicoService {
-    private final IClienteService clienteService;
+    private final ICartaoService cartaoService;
+    private final IContaService contaService;
+    private final IEventoBancarioService eventoBancarioService;
 
-    public CaixaEletronicoService(IClienteService clienteService) {
-        this.clienteService = clienteService;
+    public CaixaEletronicoService(ICartaoService cartaoService, IContaService contaService, IEventoBancarioService eventoBancarioService) {
+        this.cartaoService = cartaoService;
+        this.contaService = contaService;
+        this.eventoBancarioService = eventoBancarioService;
     }
 
-    @Override
-    public ExtratoResponse imprimirExtrato(ExtratoRequest requestExtrato) {
-        return null;
+    @Override //ready
+    public Page<ExtratoResponse> imprimirExtrato(String token, ExtratoRequest extratoRequest, Pageable pageable) {
+        Conta conta = this.acessarConta(extratoRequest);
+        Page<Movimentacao> eventosBancarios = eventoBancarioService.encontrarTodaMovimentao(conta, pageable);
+        return  eventosBancarios.map(ExtratoResponse::new);
     }
 
     @Override
     public SaqueResponse sacarDinheiro(SaqueRequest requestSaque) {
-        return null;
+        Conta conta = cartaoService.retornarContaAssociada(requestSaque.cartaoNumero);
+        return this.contaService.sacarDinheiro(conta, requestSaque);
     }
 
     @Override
     public EmprestimoResponse solicitarEmprestimo(EmprestimoRequest requestEmprestimo) {
-        return null;
+        // TODO
+        return new EmprestimoResponse("Este serviço se encontra indisponível no momento");
     }
+
+    private Conta acessarConta(RequestCaixaEletronico requestCaixaEletronico) {
+        return cartaoService.retornarContaAssociada(requestCaixaEletronico.cartaoNumero);
+    }
+
 }
+
