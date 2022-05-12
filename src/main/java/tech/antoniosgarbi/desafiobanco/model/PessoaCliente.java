@@ -18,6 +18,4 @@ public class PessoaCliente extends Pessoa {
     private Long id;
     @OneToMany
     private List<Conta> contas;
-//    @OneToMany
-//    private List<ContaPoupanca> contasPoupanca;
 }

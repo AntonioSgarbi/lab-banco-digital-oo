@@ -2,6 +2,7 @@ package tech.antoniosgarbi.desafiobanco.service.impl;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import tech.antoniosgarbi.desafiobanco.dto.painelbancario.ClienteCadastroRequest;
 import tech.antoniosgarbi.desafiobanco.dto.painelbancario.ClienteCadastroResponse;
@@ -21,7 +22,7 @@ public class ClienteService implements IClienteService {
     }
 
     public Page<ClienteCadastroResponse> pesquisarClientes(SpecBodyCliente specBodyCliente, Pageable pageable) {
-        ClienteSpecification specification = new ClienteSpecification(specBodyCliente);
+        Specification<PessoaCliente> specification = new ClienteSpecification(specBodyCliente);
         Page<PessoaCliente> pageModelo = this.pessoaClienteRepository.findAll(specification, pageable);
         return pageModelo.map(ClienteCadastroResponse::new);
     }

@@ -16,13 +16,8 @@ public class PainelBancarioController {
         this.painelBancario = painelBancario;
     }
 
-    @PutMapping("/conta-corrente/query")
+    @PutMapping("/conta/query")
     public ResponseEntity<Page<ContaResponse>> pequisarContasCorrente(@RequestBody SpecBodyConta contaSpecBody, Pageable pageable) {
-        return ResponseEntity.ok(painelBancario.pesquisarContas(contaSpecBody, pageable));
-    }
-
-    @PutMapping("/conta-poupanca/query")
-    public ResponseEntity<Page<ContaResponse>> pesquisarContasPoupanca(@RequestBody SpecBodyContaPoupanca contaSpecBody, Pageable pageable) {
         return ResponseEntity.ok(painelBancario.pesquisarContas(contaSpecBody, pageable));
     }
 
@@ -32,7 +27,7 @@ public class PainelBancarioController {
     }
 
     @PutMapping("/cartao/query")
-    public ResponseEntity<Page<CartaoResponse>> pesquisarCartoesCredito(@RequestBody SpecBodyCartaoCredito cartaoSpecBody, Pageable pageable) {
+    public ResponseEntity<Page<CartaoResponse>> pesquisarCartoes(@RequestBody SpecBodyCartao cartaoSpecBody, Pageable pageable) {
         return ResponseEntity.ok(painelBancario.pesquisarCartoes(cartaoSpecBody, pageable));
     }
 

@@ -1,20 +1,26 @@
 package tech.antoniosgarbi.desafiobanco.dto.painelbancario;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import tech.antoniosgarbi.desafiobanco.model.Agencia;
 import tech.antoniosgarbi.desafiobanco.model.PessoaCliente;
 import tech.antoniosgarbi.desafiobanco.model.enums.ContaTipo;
 
 @Data
-public abstract class SpecBodyConta {
+@NoArgsConstructor
+public class SpecBodyConta {
     private Long numero;
 
-    protected ContaTipo contaTipo;
+    private ContaTipo contaTipo;
 
-    protected Double saldoExato;
-    protected Double saldoMaximo;
-    protected Double saldoMinimo;
+    private Double saldoExato;
+    private Double saldoMaximo;
+    private Double saldoMinimo;
 
-    protected Agencia agencia;
-    protected PessoaCliente cliente;
+    private Double limiteMaximo;
+    private Double limiteMinimo;
+    private Double limiteExato;
+
+    private Agencia agencia;
+    private PessoaCliente cliente;
 }

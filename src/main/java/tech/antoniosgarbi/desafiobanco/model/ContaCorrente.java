@@ -7,6 +7,7 @@ import lombok.Setter;
 import javax.persistence.*;
 
 @Entity
+@DiscriminatorValue("corrente")
 @Getter
 @Setter
 @NoArgsConstructor

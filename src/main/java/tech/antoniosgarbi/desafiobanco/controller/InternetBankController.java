@@ -11,7 +11,7 @@ import tech.antoniosgarbi.desafiobanco.security.services.UserDetailsImpl;
 import tech.antoniosgarbi.desafiobanco.service.contract.IInternetBankService;
 
 @RestController
-@RequestMapping("/net-bank")
+@RequestMapping("/internet-banking")
 public class InternetBankController {
     private final IInternetBankService internetBankService;
 

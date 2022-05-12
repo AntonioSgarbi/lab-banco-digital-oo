@@ -1,16 +1,9 @@
 package tech.antoniosgarbi.desafiobanco.dto.painelbancario;
 
-import tech.antoniosgarbi.desafiobanco.model.CartaoCredito;
-import tech.antoniosgarbi.desafiobanco.model.CartaoDebito;
+import tech.antoniosgarbi.desafiobanco.model.Cartao;
 
 public class CartaoResponse {
 
-    public CartaoResponse(CartaoCredito modelo) {
-
+    public CartaoResponse(Cartao cartao) {
     }
-
-    public CartaoResponse(CartaoDebito modelo) {
-
-    }
-
 }
