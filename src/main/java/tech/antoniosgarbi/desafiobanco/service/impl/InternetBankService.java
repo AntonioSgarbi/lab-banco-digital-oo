@@ -2,9 +2,9 @@ package tech.antoniosgarbi.desafiobanco.service.impl;
 
 import org.springframework.stereotype.Service;
 import tech.antoniosgarbi.desafiobanco.dto.internetbank.*;
+import tech.antoniosgarbi.desafiobanco.model.Cliente;
 import tech.antoniosgarbi.desafiobanco.model.Conta;
 import tech.antoniosgarbi.desafiobanco.model.EventoBancario;
-import tech.antoniosgarbi.desafiobanco.model.PessoaCliente;
 import tech.antoniosgarbi.desafiobanco.model.enums.EventoTipo;
 import tech.antoniosgarbi.desafiobanco.security.services.UserDetailsImpl;
 import tech.antoniosgarbi.desafiobanco.service.contract.IClienteService;
@@ -26,7 +26,7 @@ public class InternetBankService implements IInternetBankService {
 
     @Override
     public ExtratoResponse mostrarExtrato(UserDetailsImpl userDetails, ExtratoRequest extratoRequest) {
-        PessoaCliente clienteLogado = this.buscarPerfil(userDetails);
+        Cliente clienteLogado = this.buscarPerfil(userDetails);
         Conta conta = this.contaService
                 .encontrarContaPorNumeroECliente(extratoRequest.getNumeroConta(), clienteLogado);
 
@@ -39,7 +39,7 @@ public class InternetBankService implements IInternetBankService {
 
     @Override
     public TransferenciaResponse transferirDinheiro(UserDetailsImpl userDetails, TransferenciaRequest transferenciaRequest) {
-        PessoaCliente clienteOrigem = this.buscarPerfil(userDetails);
+        Cliente clienteOrigem = this.buscarPerfil(userDetails);
 
         return this.contaService.transferirDinheiro(clienteOrigem, transferenciaRequest);
     }
@@ -50,7 +50,7 @@ public class InternetBankService implements IInternetBankService {
         return new EmprestimoResponse("Serviço indisponivel no momento");
     }
 
-    private PessoaCliente buscarPerfil(UserDetailsImpl userDetails) {
+    private Cliente buscarPerfil(UserDetailsImpl userDetails) {
         return this.clienteService.encontrarPeloUsuario(userDetails.getId());
     }
 }

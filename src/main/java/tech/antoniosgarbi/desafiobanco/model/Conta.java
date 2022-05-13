@@ -22,7 +22,7 @@ public abstract class Conta {
     @ManyToOne
     protected Agencia agencia;
     @ManyToOne
-    protected PessoaCliente cliente;
+    protected Cliente cliente;
     @OneToMany
     protected Set<Cartao> cartoes;
     @OneToMany

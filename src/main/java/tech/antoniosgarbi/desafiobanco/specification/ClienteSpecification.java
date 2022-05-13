@@ -2,7 +2,7 @@ package tech.antoniosgarbi.desafiobanco.specification;
 
 import org.springframework.data.jpa.domain.Specification;
 import tech.antoniosgarbi.desafiobanco.dto.painelbancario.SpecBodyCliente;
-import tech.antoniosgarbi.desafiobanco.model.PessoaCliente;
+import tech.antoniosgarbi.desafiobanco.model.Cliente;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -11,7 +11,7 @@ import javax.persistence.criteria.Root;
 import java.util.LinkedList;
 import java.util.List;
 
-public class ClienteSpecification implements Specification<PessoaCliente> {
+public class ClienteSpecification implements Specification<Cliente> {
     private final SpecBodyCliente specBodyCliente;
     private final List<Predicate> predicates;
 
@@ -21,7 +21,7 @@ public class ClienteSpecification implements Specification<PessoaCliente> {
     }
 
     @Override
-    public Predicate toPredicate(Root<PessoaCliente> root, CriteriaQuery<?> query, CriteriaBuilder builder) {
+    public Predicate toPredicate(Root<Cliente> root, CriteriaQuery<?> query, CriteriaBuilder builder) {
         if (specBodyCliente.getNome() != null) {
             predicates.add(
                     builder.like(

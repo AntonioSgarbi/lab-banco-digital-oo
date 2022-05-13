@@ -22,7 +22,7 @@ public class PainelBancarioController {
     }
 
     @PutMapping ("/cliente/query")
-    public ResponseEntity<Page<ClienteCadastroResponse>> pesquisarClientes(@RequestBody SpecBodyCliente clienteSpecBody, Pageable pageable) {
+    public ResponseEntity<Page<ClienteResponse>> pesquisarClientes(@RequestBody SpecBodyCliente clienteSpecBody, Pageable pageable) {
         return ResponseEntity.ok(painelBancario.pesquisarClientes(clienteSpecBody, pageable));
     }
 

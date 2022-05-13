@@ -32,7 +32,7 @@ public class CaixaEletronicoService implements ICaixaEletronicoService {
 
     @Override
     public SaqueResponse sacarDinheiro(SaqueRequest requestSaque) {
-        Conta conta = cartaoService.retornarContaAssociada(requestSaque.cartaoNumero);
+        Conta conta = cartaoService.retornarContaAssociada(requestSaque.cartaoNumero, requestSaque.getSenha());
         return this.contaService.sacarDinheiro(conta, requestSaque);
     }
 
@@ -43,7 +43,8 @@ public class CaixaEletronicoService implements ICaixaEletronicoService {
     }
 
     private Conta acessarConta(RequestCaixaEletronico requestCaixaEletronico) {
-        return cartaoService.retornarContaAssociada(requestCaixaEletronico.cartaoNumero);
+        return cartaoService
+                .retornarContaAssociada(requestCaixaEletronico.cartaoNumero, requestCaixaEletronico.getSenha());
     }
 
 }

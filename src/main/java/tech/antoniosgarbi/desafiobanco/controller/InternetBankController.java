@@ -19,7 +19,6 @@ public class InternetBankController {
         this.internetBankService = internetBankService;
     }
 
-
     @PutMapping("/extrato")
     public ResponseEntity<InternetBankResponse> mostrarExtrato(
             @AuthenticationPrincipal UserDetailsImpl userDetails,

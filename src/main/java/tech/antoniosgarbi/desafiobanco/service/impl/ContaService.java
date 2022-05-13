@@ -2,6 +2,7 @@ package tech.antoniosgarbi.desafiobanco.service.impl;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import tech.antoniosgarbi.desafiobanco.dto.caixaeletronico.SaqueRequest;
 import tech.antoniosgarbi.desafiobanco.dto.caixaeletronico.SaqueResponse;
@@ -11,15 +12,15 @@ import tech.antoniosgarbi.desafiobanco.dto.painelbancario.ContaResponse;
 import tech.antoniosgarbi.desafiobanco.dto.painelbancario.SpecBodyConta;
 import tech.antoniosgarbi.desafiobanco.exception.ContaNaoEncontrada;
 import tech.antoniosgarbi.desafiobanco.exception.SaldoInsuficiente;
+import tech.antoniosgarbi.desafiobanco.model.Cliente;
 import tech.antoniosgarbi.desafiobanco.model.Conta;
 import tech.antoniosgarbi.desafiobanco.model.ContaCorrente;
 import tech.antoniosgarbi.desafiobanco.model.ContaPoupanca;
-import tech.antoniosgarbi.desafiobanco.model.PessoaCliente;
 import tech.antoniosgarbi.desafiobanco.repository.ContaRepository;
 import tech.antoniosgarbi.desafiobanco.service.contract.IContaService;
+import tech.antoniosgarbi.desafiobanco.specification.ContaSpecification;
 
 import javax.transaction.Transactional;
-import java.util.Optional;
 
 @Service
 public class ContaService implements IContaService {
@@ -36,7 +37,7 @@ public class ContaService implements IContaService {
     }
 
     @Override
-    public Conta encontrarContaPorNumeroECliente(Long numero, PessoaCliente cliente) {
+    public Conta encontrarContaPorNumeroECliente(Long numero, Cliente cliente) {
         return this.contaRepository
                 .findContaByNumeroAndCliente(numero, cliente)
                 .orElseThrow(
@@ -45,18 +46,19 @@ public class ContaService implements IContaService {
     }
 
     @Override
-    public Optional<Conta> findContaByChavePix(String chavePix) {
-        return Optional.empty();
+    public Conta findContaByChavePix(String chavePix) {
+        return this.contaRepository.findByChavePix(chavePix)
+                .orElseThrow(() -> new ContaNaoEncontrada("A chave Pix não existe!"));
     }
 
     @Override
     @Transactional(rollbackOn = Exception.class)
-    public TransferenciaResponse transferirDinheiro(PessoaCliente clienteOrigem, TransferenciaRequest transferenciaRequest) {
+    public TransferenciaResponse transferirDinheiro(Cliente clienteOrigem, TransferenciaRequest transferenciaRequest) {
         Conta contaOrigem = this.encontrarContaPorNumeroECliente(transferenciaRequest.getNumeroConta(), clienteOrigem);
         Double saldoContaOrigem = contaOrigem.getSaldo();
         Double valorTransferido = transferenciaRequest.getValor();
-        Conta contaDestino = this.contaRepository.findByChavePix(transferenciaRequest.getChavePix())
-                .orElseThrow(() -> new ContaNaoEncontrada("A chave Pix não existe!"));
+
+        Conta contaDestino = this.findContaByChavePix(transferenciaRequest.getChavePix());
 
         if(valorTransferido > saldoContaOrigem)
             throw new SaldoInsuficiente(
@@ -73,7 +75,9 @@ public class ContaService implements IContaService {
 
     @Override
     public Page<ContaResponse> pesquisarContas(SpecBodyConta contaSpecBody, Pageable pageable) {
-        return null;
+        Specification<Conta> specification = new ContaSpecification(contaSpecBody);
+        Page<Conta> pageModelo = this.contaRepository.findAll(specification, pageable);
+        return pageModelo.map(ContaResponse::new);
     }
 
     @Override

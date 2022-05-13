@@ -5,7 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.List;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -18,8 +18,8 @@ public class Agencia {
     private Long id;
     private Integer numero;
     @OneToMany
-    private List<ContaCorrente> contasCorrente;
+    private Set<ContaCorrente> contasCorrente;
     @OneToMany
-    private List<ContaPoupanca> contasPoupanca;
+    private Set<ContaPoupanca> contasPoupanca;
 }
 

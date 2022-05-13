@@ -14,10 +14,10 @@ import java.time.LocalDate;
 @Setter
 @NoArgsConstructor
 public abstract class Pessoa {
-    private String nome;
-    private String documento;
-    private PessoaRegistroTipo registroTipo;
-    private LocalDate dataNascimento;
+    protected String nome;
+    protected String documento;
+    protected PessoaRegistroTipo registroTipo;
+    protected LocalDate dataNascimento;
     @OneToOne
-    private User user;
+    protected User user;
 }

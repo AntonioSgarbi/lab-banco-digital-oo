@@ -31,7 +31,7 @@ public class PainelBancarioService {
         return clienteService.cadastrarClientePainelBancario(clienteRequest);
     }
 
-    public Page<ClienteCadastroResponse> pesquisarClientes(SpecBodyCliente clienteSpecBody, Pageable pageable) {
+    public Page<ClienteResponse> pesquisarClientes(SpecBodyCliente clienteSpecBody, Pageable pageable) {
         return clienteService.pesquisarClientes(clienteSpecBody, pageable);
     }
 

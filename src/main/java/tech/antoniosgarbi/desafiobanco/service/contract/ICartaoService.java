@@ -9,5 +9,5 @@ import tech.antoniosgarbi.desafiobanco.model.Conta;
 public interface ICartaoService {
     Page<CartaoResponse> pesquisarCartoes(SpecBodyCartao cartaoSpecBody, Pageable pageable);
 
-    Conta retornarContaAssociada(String cartaoNumero);
+    Conta retornarContaAssociada(String cartaoNumero, String cartaoSenha);
 }

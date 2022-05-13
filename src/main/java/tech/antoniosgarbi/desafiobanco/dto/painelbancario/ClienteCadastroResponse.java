@@ -1,10 +1,15 @@
 package tech.antoniosgarbi.desafiobanco.dto.painelbancario;
 
-import tech.antoniosgarbi.desafiobanco.model.PessoaCliente;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-public class ClienteCadastroResponse {
+@Data
+@NoArgsConstructor
+public class ClienteCadastroResponse extends PainelBancarioResponse {
+    String mensagem;
 
-    public ClienteCadastroResponse(PessoaCliente modelo) {
-
+    public ClienteCadastroResponse(String mensagem) {
+        this.mensagem = mensagem;
     }
+
 }
