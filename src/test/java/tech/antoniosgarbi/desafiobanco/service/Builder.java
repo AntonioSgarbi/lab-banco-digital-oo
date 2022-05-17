@@ -1,11 +1,16 @@
 package tech.antoniosgarbi.desafiobanco.service;
 
+import tech.antoniosgarbi.desafiobanco.dto.caixaeletronico.ExtratoRequest;
+import tech.antoniosgarbi.desafiobanco.model.Movimentacao;
 import tech.antoniosgarbi.desafiobanco.dto.internetbank.TransferenciaRequest;
 import tech.antoniosgarbi.desafiobanco.dto.painelbancario.ClienteCadastroRequest;
 import tech.antoniosgarbi.desafiobanco.model.*;
+import tech.antoniosgarbi.desafiobanco.model.enums.EventoTipo;
 import tech.antoniosgarbi.desafiobanco.model.enums.PessoaRegistroTipo;
+import tech.antoniosgarbi.desafiobanco.security.services.UserDetailsImpl;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.Month;
 import java.util.List;
 import java.util.Set;
@@ -178,6 +183,38 @@ public abstract class Builder {
 
         return user;
 
+    }
+
+
+    static ExtratoRequest extratoRequest() {
+        ExtratoRequest request = new ExtratoRequest();
+
+        request.setSenha("senhaExtrato");
+        request.setCartaoNumero("cartaoNumero");
+
+        return request;
+    }
+
+
+    static Movimentacao movimentacao() {
+        Movimentacao movimentacao = new Movimentacao();
+
+        movimentacao.setId((long) (Math.random() * 100));
+
+        movimentacao.setMomentoRegistrado(LocalDateTime.now());
+        movimentacao.setTipo(EventoTipo.MOVIMENTACAO);
+        movimentacao.setConta(null);
+        movimentacao.setValor((Math.random() * 100));
+
+        return movimentacao;
+    }
+
+    static UserDetailsImpl userDetails() {
+        UserDetailsImpl userDetails = new UserDetailsImpl();
+
+        userDetails.setId(10L);
+
+        return userDetails;
     }
 
 }

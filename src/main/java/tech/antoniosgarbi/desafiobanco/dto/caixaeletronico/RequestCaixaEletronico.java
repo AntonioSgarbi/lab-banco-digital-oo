@@ -8,9 +8,9 @@ import java.time.LocalDateTime;
 @Data
 @NoArgsConstructor
 public abstract class RequestCaixaEletronico {
-    public LocalDateTime localDateTime;
-    public String cartaoNumero;
-    public String senha;
+    protected LocalDateTime localDateTime;
+    protected String cartaoNumero;
+    protected String senha;
 
     public RequestCaixaEletronico(String cartaoNumero, String senha) {
         this.localDateTime =LocalDateTime.now();

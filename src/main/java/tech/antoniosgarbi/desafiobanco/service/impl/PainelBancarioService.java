@@ -23,12 +23,12 @@ public class PainelBancarioService {
         this.cartaoService = cartaoService;
     }
 
-    public Page<ContaResponse> pesquisarContas(SpecBodyConta contaSpecBody, Pageable pageable) {
-        return contaService.pesquisarContas(contaSpecBody, pageable);
-    }
-
     public ClienteCadastroResponse cadastrarCliente(ClienteCadastroRequest clienteRequest) {
         return clienteService.cadastrarClientePainelBancario(clienteRequest);
+    }
+
+    public Page<ContaResponse> pesquisarContas(SpecBodyConta contaSpecBody, Pageable pageable) {
+        return contaService.pesquisarContas(contaSpecBody, pageable);
     }
 
     public Page<ClienteResponse> pesquisarClientes(SpecBodyCliente clienteSpecBody, Pageable pageable) {

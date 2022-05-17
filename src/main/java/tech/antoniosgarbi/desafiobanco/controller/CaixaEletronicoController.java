@@ -6,6 +6,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tech.antoniosgarbi.desafiobanco.dto.caixaeletronico.*;
+import tech.antoniosgarbi.desafiobanco.exception.AcessoNegado;
 import tech.antoniosgarbi.desafiobanco.service.contract.ICaixaEletronicoService;
 
 @RestController
@@ -21,11 +22,12 @@ public class CaixaEletronicoController {
     }
 
     @GetMapping("/extrato")
-    public ResponseEntity<Page<ExtratoResponse>> imprimirExtrato(
+    public ResponseEntity<ExtratoResponse> imprimirExtrato(
             @RequestHeader("token-fake") String token,
             @RequestBody ExtratoRequest extratoRequest,
             Pageable pageable) {
-        return ResponseEntity.ok(caixaEletronicoService.imprimirExtrato(token, extratoRequest, pageable));
+        if(!token.equals(tokenMock)) throw new AcessoNegado();
+        return ResponseEntity.ok(caixaEletronicoService.imprimirExtrato(extratoRequest, pageable));
     }
 
     @PostMapping("/saque")

@@ -4,6 +4,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import tech.antoniosgarbi.desafiobanco.dto.caixaeletronico.EmprestimoRequest;
+import tech.antoniosgarbi.desafiobanco.dto.caixaeletronico.EmprestimoResponse;
 import tech.antoniosgarbi.desafiobanco.dto.caixaeletronico.SaqueRequest;
 import tech.antoniosgarbi.desafiobanco.dto.caixaeletronico.SaqueResponse;
 import tech.antoniosgarbi.desafiobanco.dto.internetbank.TransferenciaRequest;
@@ -11,6 +13,8 @@ import tech.antoniosgarbi.desafiobanco.dto.internetbank.TransferenciaResponse;
 import tech.antoniosgarbi.desafiobanco.dto.painelbancario.ContaResponse;
 import tech.antoniosgarbi.desafiobanco.dto.painelbancario.SpecBodyConta;
 import tech.antoniosgarbi.desafiobanco.exception.ContaNaoEncontrada;
+import tech.antoniosgarbi.desafiobanco.exception.LimiteInsuficiente;
+import tech.antoniosgarbi.desafiobanco.exception.OperacaoInvalida;
 import tech.antoniosgarbi.desafiobanco.exception.SaldoInsuficiente;
 import tech.antoniosgarbi.desafiobanco.model.Cliente;
 import tech.antoniosgarbi.desafiobanco.model.Conta;
@@ -18,22 +22,20 @@ import tech.antoniosgarbi.desafiobanco.model.ContaCorrente;
 import tech.antoniosgarbi.desafiobanco.model.ContaPoupanca;
 import tech.antoniosgarbi.desafiobanco.repository.ContaRepository;
 import tech.antoniosgarbi.desafiobanco.service.contract.IContaService;
+import tech.antoniosgarbi.desafiobanco.service.contract.IEmprestimoService;
 import tech.antoniosgarbi.desafiobanco.specification.ContaSpecification;
 
 import javax.transaction.Transactional;
 
 @Service
 public class ContaService implements IContaService {
+    private final IEmprestimoService emprestimoService;
     private final ContaRepository contaRepository;
 
-    public ContaService(ContaRepository contaRepository) {
-        this.contaRepository = contaRepository;
-    }
 
-    @Override
-    public Double consultarSaldo() {
-        // TODO
-        return 0.0;
+    public ContaService(IEmprestimoService emprestimoService, ContaRepository contaRepository) {
+        this.emprestimoService = emprestimoService;
+        this.contaRepository = contaRepository;
     }
 
     @Override
@@ -60,7 +62,7 @@ public class ContaService implements IContaService {
 
         Conta contaDestino = this.findContaByChavePix(transferenciaRequest.getChavePix());
 
-        if(valorTransferido > saldoContaOrigem)
+        if (valorTransferido > saldoContaOrigem)
             throw new SaldoInsuficiente(
                     "Você não possui saldo suficiente para esta operação," +
                             " saldo disponível: " + saldoContaOrigem);
@@ -83,20 +85,35 @@ public class ContaService implements IContaService {
     @Override
     public SaqueResponse sacarDinheiro(Conta conta, SaqueRequest saqueRequest) {
         Class classeHerdeira = verificarTipoConta(conta);
-        if(classeHerdeira.getTypeName().equals("ContaCorrente")) {
+        if (classeHerdeira.getTypeName().equals("ContaCorrente")) {
             System.out.println("ContaCorrente");
             return this.sacarDinheiroContaCorrente((ContaCorrente) conta, saqueRequest);
         }
         return this.sacarDinheiroContaPoupanca((ContaPoupanca) conta, saqueRequest);
     }
 
+    @Override
+    public EmprestimoResponse solicitarEmprestimo(Conta conta, EmprestimoRequest requestEmprestimo) {
+        if (conta.getClass() == ContaPoupanca.class)
+            throw new OperacaoInvalida("Apenas contas corrente tem acesso a esse serviço!");
+        ContaCorrente contaValida = (ContaCorrente) conta;
+        Double valorRequisitado = requestEmprestimo.getValor();
+        if (valorRequisitado > contaValida.getLimiteAprovado())
+            throw new LimiteInsuficiente("Seu limite aprovado não cobre essa solicitação, valor máximo: " + contaValida.getLimiteAprovado());
+        emprestimoService.solicitarEmprestimo(contaValida, requestEmprestimo);
+
+        contaValida.setSaldo(contaValida.getSaldo() + requestEmprestimo.getValor());
+        contaRepository.save(contaValida);
+        return new EmprestimoResponse("O valor foi depositado em sua conta!");
+    }
+
     private SaqueResponse sacarDinheiroContaCorrente(ContaCorrente conta, SaqueRequest saqueRequest) {
         Double saldoDisponivel = conta.getSaldo();
         Double limiteDisponivel = conta.getLimiteAprovado();
         Double valorSaque = saqueRequest.getValor();
-        if(valorSaque > (saldoDisponivel + limiteDisponivel))
+        if (valorSaque > (saldoDisponivel + limiteDisponivel))
             throw new SaldoInsuficiente("Você não possui fundos para completar essa operação!");
-        if(saldoDisponivel > valorSaque) {
+        if (saldoDisponivel > valorSaque) {
             conta.setSaldo(saldoDisponivel - valorSaque);
             this.contaRepository.save(conta);
             return new SaqueResponse("Seu dinheiro está sendo contado e será entregue em poucos instantes");

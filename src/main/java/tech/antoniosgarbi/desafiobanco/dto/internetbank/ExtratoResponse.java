@@ -10,14 +10,17 @@ import java.util.Set;
 @NoArgsConstructor
 public class ExtratoResponse extends InternetBankResponse{
 
+    private Double saldo;
     private Set<EventoBancario> eventos;
 
-    public ExtratoResponse(Set<EventoBancario> eventos) {
+    public ExtratoResponse(Double saldo, Set<EventoBancario> eventos) {
+        this.saldo = saldo;
         this.eventos = eventos;
     }
 
-    public ExtratoResponse(String mensagem, Set<EventoBancario> eventos) {
+    public ExtratoResponse(String mensagem, Double saldo, Set<EventoBancario> eventos) {
         super(mensagem);
+        this.saldo = saldo;
         this.eventos = eventos;
     }
 }

@@ -4,7 +4,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import tech.antoniosgarbi.desafiobanco.dto.caixaeletronico.*;
-import tech.antoniosgarbi.desafiobanco.dto.evento.Movimentacao;
+import tech.antoniosgarbi.desafiobanco.exception.OperacaoInvalida;
+import tech.antoniosgarbi.desafiobanco.model.ContaPoupanca;
+import tech.antoniosgarbi.desafiobanco.model.Movimentacao;
 import tech.antoniosgarbi.desafiobanco.model.Conta;
 import tech.antoniosgarbi.desafiobanco.service.contract.ICaixaEletronicoService;
 import tech.antoniosgarbi.desafiobanco.service.contract.ICartaoService;
@@ -24,27 +26,29 @@ public class CaixaEletronicoService implements ICaixaEletronicoService {
     }
 
     @Override //ready
-    public Page<ExtratoResponse> imprimirExtrato(String token, ExtratoRequest extratoRequest, Pageable pageable) {
+    public ExtratoResponse imprimirExtrato(ExtratoRequest extratoRequest, Pageable pageable) {
         Conta conta = this.acessarConta(extratoRequest);
-        Page<Movimentacao> eventosBancarios = eventoBancarioService.encontrarTodaMovimentao(conta, pageable);
-        return  eventosBancarios.map(ExtratoResponse::new);
+        Page<Movimentacao> pageModelo = eventoBancarioService.encontrarTodaMovimentao(conta, pageable);
+        Page<MovimentacaoBodyResponse> pageResponse = pageModelo.map(MovimentacaoBodyResponse::new);
+        return new ExtratoResponse(conta.getSaldo(), pageResponse);
     }
 
     @Override
     public SaqueResponse sacarDinheiro(SaqueRequest requestSaque) {
-        Conta conta = cartaoService.retornarContaAssociada(requestSaque.cartaoNumero, requestSaque.getSenha());
+        Conta conta = cartaoService.retornarContaAssociada(requestSaque.getCartaoNumero(), requestSaque.getSenha());
         return this.contaService.sacarDinheiro(conta, requestSaque);
     }
 
     @Override
     public EmprestimoResponse solicitarEmprestimo(EmprestimoRequest requestEmprestimo) {
-        // TODO
-        return new EmprestimoResponse("Este serviço se encontra indisponível no momento");
+        Conta conta = cartaoService
+                .retornarContaAssociada(requestEmprestimo.getCartaoNumero(), requestEmprestimo.getSenha());
+        return this.contaService.solicitarEmprestimo(conta, requestEmprestimo);
     }
 
     private Conta acessarConta(RequestCaixaEletronico requestCaixaEletronico) {
         return cartaoService
-                .retornarContaAssociada(requestCaixaEletronico.cartaoNumero, requestCaixaEletronico.getSenha());
+                .retornarContaAssociada(requestCaixaEletronico.getCartaoNumero(), requestCaixaEletronico.getSenha());
     }
 
 }

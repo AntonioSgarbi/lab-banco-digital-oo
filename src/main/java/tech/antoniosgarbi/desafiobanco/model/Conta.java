@@ -29,15 +29,15 @@ public abstract class Conta {
     protected Set<EventoBancario> eventosBancarios;
     protected String chavePix;
 
-    @Override
-    public String toString() {
-        return "Conta{ " +
-                "\nnumero: " + numero +
-                ",\nsaldo: " + saldo +
-                ",\nagencia: " + agencia.getNumero() +
-                ",\ncliente: " + cliente +
-                ",\neventosBancarios: " + eventosBancarios +
-                "\n}";
-    }
+//    @Override
+//    public String toString() {
+//        return "Conta{ " +
+//                "\nnumero: " + numero +
+//                ",\nsaldo: " + saldo +
+//                ",\nagencia: " + agencia.getNumero() +
+//                ",\ncliente: " + cliente +
+//                ",\neventosBancarios: " + eventosBancarios +
+//                "\n}";
+//    }
 
 }

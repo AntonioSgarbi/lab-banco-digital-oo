@@ -6,7 +6,7 @@ import tech.antoniosgarbi.desafiobanco.dto.caixaeletronico.*;
 
 
 public interface ICaixaEletronicoService {
-    Page<ExtratoResponse> imprimirExtrato(String token, ExtratoRequest extratoRequest, Pageable pageable);
+    ExtratoResponse imprimirExtrato(ExtratoRequest extratoRequest, Pageable pageable);
 
     SaqueResponse sacarDinheiro(SaqueRequest requestSaque);
 
