@@ -1,0 +1,19 @@
+desafio-banco:
+  image: desafio-banco:latest
+  ports:
+    - "8080:8080"
+  links:
+    - postgresql
+  environment:
+    - DB_IP=postgresql
+
+postgresql:
+  image: postgres:14.1
+  environment:
+    - POSTGRES_USER=postgres
+    - POSTGRES_PASSWORD=postgres
+    - POSTGRES_DB=banco_digital
+  expose:
+    - 5432
+  volumes:
+    - /var/local:/var/lib/postgresql/data
