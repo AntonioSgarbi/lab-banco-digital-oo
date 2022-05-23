@@ -84,17 +84,15 @@ public class ContaService implements IContaService {
 
     @Override
     public SaqueResponse sacarDinheiro(Conta conta, SaqueRequest saqueRequest) {
-        Class classeHerdeira = verificarTipoConta(conta);
-        if (classeHerdeira.getTypeName().equals("ContaCorrente")) {
-            System.out.println("ContaCorrente");
-            return this.sacarDinheiroContaCorrente((ContaCorrente) conta, saqueRequest);
-        }
+        if (conta instanceof ContaCorrente contaCorrente)
+            return this.sacarDinheiroContaCorrente(contaCorrente, saqueRequest);
+
         return this.sacarDinheiroContaPoupanca((ContaPoupanca) conta, saqueRequest);
     }
 
     @Override
     public EmprestimoResponse solicitarEmprestimo(Conta conta, EmprestimoRequest requestEmprestimo) {
-        if (conta.getClass() == ContaPoupanca.class)
+        if (conta instanceof ContaPoupanca contaPoupanca)
             throw new OperacaoInvalida("Apenas contas corrente tem acesso a esse serviço!");
         ContaCorrente contaValida = (ContaCorrente) conta;
         Double valorRequisitado = requestEmprestimo.getValor();
@@ -111,6 +109,7 @@ public class ContaService implements IContaService {
         Double saldoDisponivel = conta.getSaldo();
         Double limiteDisponivel = conta.getLimiteAprovado();
         Double valorSaque = saqueRequest.getValor();
+
         if (valorSaque > (saldoDisponivel + limiteDisponivel))
             throw new SaldoInsuficiente("Você não possui fundos para completar essa operação!");
         if (saldoDisponivel > valorSaque) {
@@ -118,19 +117,20 @@ public class ContaService implements IContaService {
             this.contaRepository.save(conta);
             return new SaqueResponse("Seu dinheiro está sendo contado e será entregue em poucos instantes");
         }
-        //TODO
+        //TODO valorSaque < (saldoDisponivel + limiteAprovado)
         return new SaqueResponse(
                 "Serviço indisponível no momento, tente mais tarde ou implemente essa função");
     }
 
     private SaqueResponse sacarDinheiroContaPoupanca(ContaPoupanca conta, SaqueRequest saqueRequest) {
-        //TODO
-        return new SaqueResponse(
-                "Apeanas saque de conta corrente está disponivel, use outra conta ou implemente a função");
-    }
-
-    private Class verificarTipoConta(Conta conta) {
-        return conta.getClass();
+        Double saldoDisponivel = conta.getSaldo();
+        Double valorSaque = saqueRequest.getValor();
+        if (saldoDisponivel > valorSaque) {
+            conta.setSaldo(saldoDisponivel - valorSaque);
+            this.contaRepository.save(conta);
+            return new SaqueResponse("Seu dinheiro está sendo contado e será entregue em poucos instantes");
+        }
+        throw new SaldoInsuficiente("Você não possui fundos para completar essa operação!");
     }
 
 }

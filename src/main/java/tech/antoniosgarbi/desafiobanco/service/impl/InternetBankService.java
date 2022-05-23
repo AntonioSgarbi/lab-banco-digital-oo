@@ -46,7 +46,7 @@ public class InternetBankService implements IInternetBankService {
 
     @Override
     public EmprestimoResponse solicitarEmprestimo(UserDetailsImpl userDetails, EmprestimoRequest emprestimoRequest) {
-        //TODO
+        // TO-DO
         return new EmprestimoResponse("Serviço indisponivel no momento");
     }
 

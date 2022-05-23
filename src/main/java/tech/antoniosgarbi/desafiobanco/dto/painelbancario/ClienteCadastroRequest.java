@@ -16,4 +16,5 @@ public class ClienteCadastroRequest {
     private String documento;
     private PessoaRegistroTipo registroTipo;
     private LocalDate dataNascimento;
+    private String email;
 }

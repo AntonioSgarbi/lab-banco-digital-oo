@@ -13,6 +13,7 @@ import tech.antoniosgarbi.desafiobanco.exception.CadastroInvalido;
 import tech.antoniosgarbi.desafiobanco.exception.ClienteNaoEncontrado;
 import tech.antoniosgarbi.desafiobanco.model.Cliente;
 import tech.antoniosgarbi.desafiobanco.repository.ClienteRepository;
+import tech.antoniosgarbi.desafiobanco.security.services.UserDetailsServiceImpl;
 import tech.antoniosgarbi.desafiobanco.service.contract.IClienteService;
 import tech.antoniosgarbi.desafiobanco.specification.ClienteSpecification;
 
@@ -23,9 +24,11 @@ import java.util.Optional;
 @Service
 public class ClienteService implements IClienteService {
     private final ClienteRepository pessoaClienteRepository;
+    private final UserDetailsServiceImpl userDetailsService;
 
-    public ClienteService(ClienteRepository pessoaClienteRepository) {
+    public ClienteService(ClienteRepository pessoaClienteRepository, UserDetailsServiceImpl userDetailsService) {
         this.pessoaClienteRepository = pessoaClienteRepository;
+        this.userDetailsService = userDetailsService;
     }
 
     public Page<ClienteResponse> pesquisarClientes(SpecBodyCliente specBodyCliente, Pageable pageable) {
@@ -45,9 +48,10 @@ public class ClienteService implements IClienteService {
         if(optional.isPresent())
             throw new CadastroDuplicado("Essa pessoa já possui um cadastro de cliente, edite seu registro");
 
-        this.pessoaClienteRepository.save(cliente);
+        cliente = this.pessoaClienteRepository.save(cliente);
 
-        //TODO: cadastrar usuário
+        userDetailsService.criarUsuarioParaCliente(cliente, clienteRequest.getEmail());
+
 
         return new ClienteCadastroResponse("Cadastro realizado");
     }
