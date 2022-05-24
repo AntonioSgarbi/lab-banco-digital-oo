@@ -6,14 +6,24 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import tech.antoniosgarbi.desafiobanco.dto.internetbank.TransferenciaRequest;
 import tech.antoniosgarbi.desafiobanco.dto.internetbank.TransferenciaResponse;
+import tech.antoniosgarbi.desafiobanco.dto.painelbancario.ClienteResponse;
+import tech.antoniosgarbi.desafiobanco.dto.painelbancario.ContaResponse;
+import tech.antoniosgarbi.desafiobanco.dto.painelbancario.SpecBodyCliente;
+import tech.antoniosgarbi.desafiobanco.dto.painelbancario.SpecBodyConta;
 import tech.antoniosgarbi.desafiobanco.exception.ContaNaoEncontrada;
 import tech.antoniosgarbi.desafiobanco.exception.SaldoInsuficiente;
+import tech.antoniosgarbi.desafiobanco.model.Cliente;
 import tech.antoniosgarbi.desafiobanco.model.Conta;
 import tech.antoniosgarbi.desafiobanco.repository.ContaRepository;
 import tech.antoniosgarbi.desafiobanco.service.impl.ContaService;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -133,7 +143,21 @@ public class ContaServiceTest {
    @Test
    @DisplayName("Deve retornar uma Page<ContaResponse> ao receber um SpecBodyConta e Pageable")
    void pesquisarContas0() {
-   //TODO
+      List<Conta> listaModel = List.of(Builder.contaCorrenteValida(), Builder.contaPoupancaValida());
+      Page<Conta> pageModel = new PageImpl<>(listaModel);
+
+      SpecBodyConta specBodyConta = new SpecBodyConta();
+
+      when(contaRepository.findAll((Specification<Conta>) any(), (Pageable) any())).thenReturn(pageModel);
+
+      Page<ContaResponse> resultado = underTest.pesquisarContas(specBodyConta, Pageable.unpaged());
+
+      assertNotNull(resultado.getContent());
+      assertNotNull(resultado.getContent().get(0));
+      assertNotNull(resultado.getContent().get(1));
+
+      int totalElementosEsperado = 2;
+      assertEquals(totalElementosEsperado, resultado.getTotalElements());
    }
 
 }

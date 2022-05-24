@@ -8,7 +8,7 @@ import javax.persistence.*;
 import java.util.Set;
 
 @Entity
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@Inheritance
 @Getter
 @Setter
 @NoArgsConstructor
@@ -28,16 +28,5 @@ public abstract class Conta {
     @OneToMany
     protected Set<EventoBancario> eventosBancarios;
     protected String chavePix;
-
-//    @Override
-//    public String toString() {
-//        return "Conta{ " +
-//                "\nnumero: " + numero +
-//                ",\nsaldo: " + saldo +
-//                ",\nagencia: " + agencia.getNumero() +
-//                ",\ncliente: " + cliente +
-//                ",\neventosBancarios: " + eventosBancarios +
-//                "\n}";
-//    }
 
 }

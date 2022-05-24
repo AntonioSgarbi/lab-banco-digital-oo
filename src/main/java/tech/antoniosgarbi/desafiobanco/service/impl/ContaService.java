@@ -107,19 +107,14 @@ public class ContaService implements IContaService {
 
     private SaqueResponse sacarDinheiroContaCorrente(ContaCorrente conta, SaqueRequest saqueRequest) {
         Double saldoDisponivel = conta.getSaldo();
-        Double limiteDisponivel = conta.getLimiteAprovado();
+        Double limiteAprovado = conta.getLimiteAprovado();
         Double valorSaque = saqueRequest.getValor();
 
-        if (valorSaque > (saldoDisponivel + limiteDisponivel))
+        if (valorSaque > (saldoDisponivel + limiteAprovado))
             throw new SaldoInsuficiente("Você não possui fundos para completar essa operação!");
-        if (saldoDisponivel > valorSaque) {
-            conta.setSaldo(saldoDisponivel - valorSaque);
-            this.contaRepository.save(conta);
-            return new SaqueResponse("Seu dinheiro está sendo contado e será entregue em poucos instantes");
-        }
-        //TODO valorSaque < (saldoDisponivel + limiteAprovado)
-        return new SaqueResponse(
-                "Serviço indisponível no momento, tente mais tarde ou implemente essa função");
+        conta.setSaldo(saldoDisponivel - valorSaque);
+        this.contaRepository.save(conta);
+        return new SaqueResponse("Seu dinheiro está sendo contado e será entregue em poucos instantes");
     }
 
     private SaqueResponse sacarDinheiroContaPoupanca(ContaPoupanca conta, SaqueRequest saqueRequest) {

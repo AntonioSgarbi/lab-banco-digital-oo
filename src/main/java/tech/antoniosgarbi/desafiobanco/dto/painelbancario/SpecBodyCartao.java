@@ -1,6 +1,7 @@
 package tech.antoniosgarbi.desafiobanco.dto.painelbancario;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import tech.antoniosgarbi.desafiobanco.model.ContaCorrente;
 import tech.antoniosgarbi.desafiobanco.model.ContaPoupanca;
 import tech.antoniosgarbi.desafiobanco.model.enums.CartaoCreditoStatus;
@@ -10,7 +11,8 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Data
-public abstract class SpecBodyCartao {
+@NoArgsConstructor
+public class SpecBodyCartao {
     private String numero;
 
     private LocalDate validadeExata;

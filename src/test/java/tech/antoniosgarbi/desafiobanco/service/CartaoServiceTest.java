@@ -5,15 +5,23 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.*;
+import org.springframework.data.jpa.domain.Specification;
+import tech.antoniosgarbi.desafiobanco.dto.painelbancario.CartaoResponse;
+import tech.antoniosgarbi.desafiobanco.dto.painelbancario.SpecBodyCartao;
 import tech.antoniosgarbi.desafiobanco.exception.CartaoException;
 import tech.antoniosgarbi.desafiobanco.model.Cartao;
 import tech.antoniosgarbi.desafiobanco.model.Conta;
 import tech.antoniosgarbi.desafiobanco.repository.CartaoRepository;
 import tech.antoniosgarbi.desafiobanco.service.impl.CartaoService;
+import tech.antoniosgarbi.desafiobanco.specification.CartaoSpecification;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
@@ -69,6 +77,20 @@ public class CartaoServiceTest {
     @Test
     @DisplayName("Deve retornar uma Page<CartaoResponse> ao receber um SpecBodyCartao e Pageable")
     void pesquisarCartoes0() {
-        //TODO
+        List<Cartao> listaCartao = List.of(Builder.cartaoDebitoValido(), Builder.cartaoCreditoValido());
+        Page<Cartao> pageCartao = new PageImpl<>(listaCartao);
+
+        SpecBodyCartao specBodyCartao = new SpecBodyCartao();
+
+        when(cartaoRepository.findAll((Specification<Cartao>) any(), (Pageable) any())).thenReturn(pageCartao);
+
+        Page<CartaoResponse> resultado = underTest.pesquisarCartoes(specBodyCartao, Pageable.unpaged());
+
+        assertNotNull(resultado.getContent());
+        assertNotNull(resultado.getContent().get(0));
+        assertNotNull(resultado.getContent().get(1));
+
+        int totalElementosEsperado = 2;
+        assertEquals(totalElementosEsperado, resultado.getTotalElements());
     }
 }

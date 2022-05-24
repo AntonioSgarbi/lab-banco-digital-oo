@@ -185,7 +185,6 @@ public abstract class Builder {
 
     }
 
-
     static ExtratoRequest extratoRequest() {
         ExtratoRequest request = new ExtratoRequest();
 
@@ -194,7 +193,6 @@ public abstract class Builder {
 
         return request;
     }
-
 
     static Movimentacao movimentacao() {
         Movimentacao movimentacao = new Movimentacao();

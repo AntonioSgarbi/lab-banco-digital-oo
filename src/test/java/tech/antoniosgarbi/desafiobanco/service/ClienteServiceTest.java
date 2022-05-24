@@ -5,21 +5,26 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
-import tech.antoniosgarbi.desafiobanco.dto.painelbancario.ClienteCadastroRequest;
-import tech.antoniosgarbi.desafiobanco.dto.painelbancario.ClienteCadastroResponse;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
+import tech.antoniosgarbi.desafiobanco.dto.painelbancario.*;
 import tech.antoniosgarbi.desafiobanco.exception.CadastroDuplicado;
 import tech.antoniosgarbi.desafiobanco.exception.CadastroInvalido;
+import tech.antoniosgarbi.desafiobanco.model.Cartao;
 import tech.antoniosgarbi.desafiobanco.model.Cliente;
 import tech.antoniosgarbi.desafiobanco.model.User;
 import tech.antoniosgarbi.desafiobanco.repository.ClienteRepository;
 import tech.antoniosgarbi.desafiobanco.service.impl.ClienteService;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
@@ -32,7 +37,21 @@ public class ClienteServiceTest {
     @Test
     @DisplayName("Deve retornar Page<ClienteResponse> ao receber SpecBodyCliente")
     void pesquisarClientes0(){
-        //TODO
+        List<Cliente> listaModel = List.of(Builder.clienteValido(), Builder.clienteValido());
+        Page<Cliente> pageModel = new PageImpl<>(listaModel);
+
+        SpecBodyCliente specBodyCliente = new SpecBodyCliente();
+
+        when(clienteRepository.findAll((Specification<Cliente>) any(), (Pageable) any())).thenReturn(pageModel);
+
+        Page<ClienteResponse> resultado = underTest.pesquisarClientes(specBodyCliente, Pageable.unpaged());
+
+        assertNotNull(resultado.getContent());
+        assertNotNull(resultado.getContent().get(0));
+        assertNotNull(resultado.getContent().get(1));
+
+        int totalElementosEsperado = 2;
+        assertEquals(totalElementosEsperado, resultado.getTotalElements());
     }
 
     @Test
