@@ -16,6 +16,7 @@ import tech.antoniosgarbi.desafiobanco.model.Cartao;
 import tech.antoniosgarbi.desafiobanco.model.Cliente;
 import tech.antoniosgarbi.desafiobanco.model.User;
 import tech.antoniosgarbi.desafiobanco.repository.ClienteRepository;
+import tech.antoniosgarbi.desafiobanco.security.services.UserDetailsServiceImpl;
 import tech.antoniosgarbi.desafiobanco.service.impl.ClienteService;
 
 import java.time.LocalDate;
@@ -31,6 +32,8 @@ import static org.mockito.Mockito.when;
 public class ClienteServiceTest {
     @Mock
     private ClienteRepository clienteRepository;
+    @Mock
+    UserDetailsServiceImpl userDetailsService;
     @InjectMocks
     private ClienteService underTest;
 
@@ -61,7 +64,11 @@ public class ClienteServiceTest {
 
         when(clienteRepository.findByDocumento(anyString())).thenReturn(Optional.empty());
 
+        when(userDetailsService.criarUsuarioParaCliente(any(Cliente.class), anyString()))
+                .thenReturn(Builder.userValido());
+
         ClienteCadastroResponse response = underTest.cadastrarClientePainelBancario(request);
+
         String mensagemEsperada = "Cadastro realizado";
         assertEquals(mensagemEsperada, response.getMensagem());
     }

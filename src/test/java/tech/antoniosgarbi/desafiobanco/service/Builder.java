@@ -1,5 +1,6 @@
 package tech.antoniosgarbi.desafiobanco.service;
 
+import tech.antoniosgarbi.desafiobanco.dto.caixaeletronico.EmprestimoRequest;
 import tech.antoniosgarbi.desafiobanco.dto.caixaeletronico.ExtratoRequest;
 import tech.antoniosgarbi.desafiobanco.model.Movimentacao;
 import tech.antoniosgarbi.desafiobanco.dto.internetbank.TransferenciaRequest;
@@ -213,6 +214,26 @@ public abstract class Builder {
         userDetails.setId(10L);
 
         return userDetails;
+    }
+
+    static EmprestimoRequest emprestimoRequest() {
+        EmprestimoRequest request = new EmprestimoRequest();
+
+        request.setSenha("senha");
+        request.setCartaoNumero("cartaoNumero");
+        request.setValor(200.0);
+        request.setDiaVencimento((short) 10);
+        request.setQuantidadeParcelas((short) 2);
+
+        return request;
+    }
+
+    static tech.antoniosgarbi.desafiobanco.dto.internetbank.ExtratoRequest extratoRequest1() {
+        tech.antoniosgarbi.desafiobanco.dto.internetbank.ExtratoRequest request =
+                new tech.antoniosgarbi.desafiobanco.dto.internetbank.ExtratoRequest();
+
+        request.setNumeroConta(11111L);
+        return request;
     }
 
 }

@@ -8,6 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import tech.antoniosgarbi.desafiobanco.dto.caixaeletronico.*;
+import tech.antoniosgarbi.desafiobanco.model.Conta;
 import tech.antoniosgarbi.desafiobanco.model.Movimentacao;
 import tech.antoniosgarbi.desafiobanco.service.impl.CaixaEletronicoService;
 import tech.antoniosgarbi.desafiobanco.service.impl.CartaoService;
@@ -59,12 +60,18 @@ public class CaixaEletronicoServiceTest {
     }
 
     @Test
-    @DisplayName("Método não implementado ainda")
+    @DisplayName("Deve retornar um EmprestimoResponse ao receber EmprestimoRequest")
     void solicitarEmprestimo() {
-        EmprestimoResponse response = underTest.solicitarEmprestimo(new EmprestimoRequest());
-        String mensagem = "Este serviço se encontra indisponível no momento";
-        assertEquals(mensagem, response.getMensagem());
-        assertTrue(false);
+        EmprestimoResponse esperado = new EmprestimoResponse("O valor foi depositado em sua conta!");
+        when(cartaoService.retornarContaAssociada(anyString(), anyString()))
+                .thenReturn(Builder.contaCorrenteValida());
+        when(contaService.solicitarEmprestimo(any(Conta.class), any(EmprestimoRequest.class)))
+                .thenReturn(esperado);
+
+        EmprestimoResponse response = underTest.solicitarEmprestimo(Builder.emprestimoRequest());
+
+        assertNotNull(response);
+        assertEquals(esperado.getMensagem(), response.getMensagem());
     }
 
 }

@@ -33,8 +33,6 @@ public class InternetBankServiceTest {
     @DisplayName("Deve retornar um ExtratoResponde com saldo e eventos ao receber um ExtratoRequest válido")
     void mostrarExtrato0() {
         Conta conta = Builder.contaCorrenteValida();
-
-        System.out.println(conta);
         Set<EventoBancario> movimentacao =
                 Set.of(Builder.movimentacao(),Builder.movimentacao(),Builder.movimentacao(),Builder.movimentacao());
         conta.setEventosBancarios(movimentacao);
@@ -44,9 +42,9 @@ public class InternetBankServiceTest {
 
         ExtratoResponse esperado = new ExtratoResponse(conta.getSaldo(), movimentacao);
 
-        ExtratoResponse response = underTest.mostrarExtrato(Builder.userDetails(), new ExtratoRequest());
+        ExtratoResponse response = underTest.mostrarExtrato(Builder.userDetails(), Builder.extratoRequest1());
 
-        assertEquals(esperado, response);
+        assertEquals(esperado.getEventos(), response.getEventos());
     }
 
 }
