@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import tech.antoniosgarbi.desafiobanco.model.EventoBancario;
 
 import javax.persistence.Entity;
 

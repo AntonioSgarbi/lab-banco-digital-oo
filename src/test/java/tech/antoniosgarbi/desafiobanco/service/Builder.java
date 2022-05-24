@@ -2,7 +2,6 @@ package tech.antoniosgarbi.desafiobanco.service;
 
 import tech.antoniosgarbi.desafiobanco.dto.caixaeletronico.EmprestimoRequest;
 import tech.antoniosgarbi.desafiobanco.dto.caixaeletronico.ExtratoRequest;
-import tech.antoniosgarbi.desafiobanco.model.Movimentacao;
 import tech.antoniosgarbi.desafiobanco.dto.internetbank.TransferenciaRequest;
 import tech.antoniosgarbi.desafiobanco.dto.painelbancario.ClienteCadastroRequest;
 import tech.antoniosgarbi.desafiobanco.model.*;

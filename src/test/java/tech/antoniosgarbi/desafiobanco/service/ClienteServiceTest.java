@@ -9,10 +9,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
-import tech.antoniosgarbi.desafiobanco.dto.painelbancario.*;
+import tech.antoniosgarbi.desafiobanco.dto.painelbancario.ClienteCadastroRequest;
+import tech.antoniosgarbi.desafiobanco.dto.painelbancario.ClienteCadastroResponse;
+import tech.antoniosgarbi.desafiobanco.dto.painelbancario.ClienteResponse;
+import tech.antoniosgarbi.desafiobanco.dto.painelbancario.SpecBodyCliente;
 import tech.antoniosgarbi.desafiobanco.exception.CadastroDuplicado;
 import tech.antoniosgarbi.desafiobanco.exception.CadastroInvalido;
-import tech.antoniosgarbi.desafiobanco.model.Cartao;
 import tech.antoniosgarbi.desafiobanco.model.Cliente;
 import tech.antoniosgarbi.desafiobanco.model.User;
 import tech.antoniosgarbi.desafiobanco.repository.ClienteRepository;
@@ -25,7 +27,6 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.*;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest

@@ -5,7 +5,9 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.domain.*;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import tech.antoniosgarbi.desafiobanco.dto.painelbancario.CartaoResponse;
 import tech.antoniosgarbi.desafiobanco.dto.painelbancario.SpecBodyCartao;
@@ -14,11 +16,9 @@ import tech.antoniosgarbi.desafiobanco.model.Cartao;
 import tech.antoniosgarbi.desafiobanco.model.Conta;
 import tech.antoniosgarbi.desafiobanco.repository.CartaoRepository;
 import tech.antoniosgarbi.desafiobanco.service.impl.CartaoService;
-import tech.antoniosgarbi.desafiobanco.specification.CartaoSpecification;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;

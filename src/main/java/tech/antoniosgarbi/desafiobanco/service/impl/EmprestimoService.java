@@ -2,7 +2,6 @@ package tech.antoniosgarbi.desafiobanco.service.impl;
 
 import org.springframework.stereotype.Service;
 import tech.antoniosgarbi.desafiobanco.dto.caixaeletronico.EmprestimoRequest;
-import tech.antoniosgarbi.desafiobanco.dto.caixaeletronico.EmprestimoResponse;
 import tech.antoniosgarbi.desafiobanco.exception.LimiteInsuficiente;
 import tech.antoniosgarbi.desafiobanco.model.ContaCorrente;
 import tech.antoniosgarbi.desafiobanco.model.Emprestimo;

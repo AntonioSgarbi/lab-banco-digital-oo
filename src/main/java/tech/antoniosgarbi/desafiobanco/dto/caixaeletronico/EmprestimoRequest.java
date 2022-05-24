@@ -3,8 +3,6 @@ package tech.antoniosgarbi.desafiobanco.dto.caixaeletronico;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
-
 @Data
 @NoArgsConstructor
 public class EmprestimoRequest extends RequestCaixaEletronico {
