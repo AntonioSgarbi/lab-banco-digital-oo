@@ -25,11 +25,11 @@ public class IntegrationService {
     }
 
     public List<ClienteResponse> gerarCadastros(short quantidade) {
-        Random gerador = new Random();
+        Random gerador = RandomSingleton.getRandomInstance();
 
         List<ClienteResponse> clientesGerados = new LinkedList<>();
 
-        for(int i=0; i>quantidade; i++){
+        for(int i=0; i<quantidade; i++){
             ClienteCadastroRequest request = new ClienteCadastroRequest();
 
             int ano = gerador.nextInt(1950, 2003);
@@ -43,8 +43,8 @@ public class IntegrationService {
             String nomeGerado = nomes.get(0) + " " + nomes.get(2);
             request.setNome(nomeGerado);
 
-            Long cpfGerado = gerador.nextLong(111_111_111_11L, 999_999_999_99L);
-            request.setDocumento(cpfGerado.toString());
+            long cpfGerado = gerador.nextLong(111_111_111_11L, 999_999_999_99L);
+            request.setDocumento(String.valueOf(cpfGerado));
 
             request.setRegistroTipo(PessoaRegistroTipo.FISICA);
             request.setId(null);
