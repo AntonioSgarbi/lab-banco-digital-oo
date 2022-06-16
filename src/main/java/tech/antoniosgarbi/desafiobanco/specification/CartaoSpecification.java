@@ -24,7 +24,7 @@ public class CartaoSpecification implements Specification<Cartao> {
         if (specBodyCartao.getNumero() != null) {
             predicates.add(
                     builder.like(
-                            root.get("nome"),
+                            root.get("numero"),
                             String.format("%%%s%%", specBodyCartao.getNumero()))
             );
         }
