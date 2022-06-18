@@ -1,5 +1,5 @@
 desafio-banco:
-  image: antoniosk/desafio-banco:latest
+  image: antoniosk/desafio-banco:0.2
   ports:
     - "8080:8080"
   links:
